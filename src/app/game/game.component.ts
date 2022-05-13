@@ -1,4 +1,4 @@
-import { Gamelogic } from './../gamelogic';
+import { Gamelogic } from '../class/gamelogic';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
