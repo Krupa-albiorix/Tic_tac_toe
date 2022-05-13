@@ -1,0 +1,44 @@
+<div class="view-port">
+    <div class="container">
+        <div class="title">Tic-Tac-Toe</div><br>
+        <div class="content">
+
+            <div class="current-status" style="text-align:center; font-weight: 500;">
+                Start The Game
+            </div>
+
+            <button mat-raised-button *ngIf="this.game.gameStatus === 0" (click)="startGame()">Start Game</button>&nbsp;
+
+            <div class="gameboard" *ngIf="this.game.gameStatus === 1">
+
+                <div class="players player-one align-self-center">
+                    Player 1
+                </div>
+
+                <div class="gamefield">
+                    <div class="row">
+                        <div (click)="clickSubField($event)" position="0" class="subfield col-4"></div>
+                        <div (click)="clickSubField($event)" position="1" class="subfield col-4"></div>
+                        <div (click)="clickSubField($event)" position="2" class="subfield col-4"></div>
+                    </div>
+                    <div class="row">
+                        <div (click)="clickSubField($event)" position="3" class="subfield col-4"></div>
+                        <div (click)="clickSubField($event)" position="4" class="subfield col-4"></div>
+                        <div (click)="clickSubField($event)" position="5" class="subfield col-4"></div>
+                    </div>
+                    <div class="row">
+                        <div (click)="clickSubField($event)" position="6" class="subfield col-4"></div>
+                        <div (click)="clickSubField($event)" position="7" class="subfield col-4"></div>
+                        <div (click)="clickSubField($event)" position="8" class="subfield col-4"></div>
+                    </div>
+                </div>
+
+                <div class="players player-two align-self-center">
+                    Player 2
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
