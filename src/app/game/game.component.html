@@ -1,44 +1,22 @@
-<div class="view-port">
-    <div class="container">
-        <div class="title">Tic-Tac-Toe</div><br>
-        <div class="content">
+<div class="header">
+    <h1 class="text-center text-orange "  
+      *ngIf="gameLogic.isGameRunning"  
+      [ngClass]="{'text-teal': gameLogic.activePlayer == 'O'}"> 
+      {{ gameLogic.activePlayer }}'S TURN  
+    </h1>
+    <h1 *ngIf="!gameLogic.isGameRunning" >  Tic-Tac-Toe </h1> 
 
-            <div class="current-status" style="text-align:center; font-weight: 500;">
-                Start The Game
-            </div>
 
-            <button mat-raised-button *ngIf="this.game.gameStatus === 0" (click)="startGame()">Start Game</button>&nbsp;
-
-            <div class="gameboard" *ngIf="this.game.gameStatus === 1">
-
-                <div class="players player-one align-self-center">
-                    Player 1
-                </div>
-
-                <div class="gamefield">
-                    <div class="row">
-                        <div (click)="clickSubField($event)" position="0" class="subfield col-4"></div>
-                        <div (click)="clickSubField($event)" position="1" class="subfield col-4"></div>
-                        <div (click)="clickSubField($event)" position="2" class="subfield col-4"></div>
-                    </div>
-                    <div class="row">
-                        <div (click)="clickSubField($event)" position="3" class="subfield col-4"></div>
-                        <div (click)="clickSubField($event)" position="4" class="subfield col-4"></div>
-                        <div (click)="clickSubField($event)" position="5" class="subfield col-4"></div>
-                    </div>
-                    <div class="row">
-                        <div (click)="clickSubField($event)" position="6" class="subfield col-4"></div>
-                        <div (click)="clickSubField($event)" position="7" class="subfield col-4"></div>
-                        <div (click)="clickSubField($event)" position="8" class="subfield col-4"></div>
-                    </div>
-                </div>
-
-                <div class="players player-two align-self-center">
-                    Player 2
-                </div>
-
-            </div>
-
+    <section>
+        <div class="square-container" *ngFor="let square of gameLogic.board">
+            <app-squre [square]="square" border-blue></app-squre>
         </div>
-    </div>
+    </section>
+
+    <h1 class="current-status text-center text-grey-darker" *ngIf="gameLogic.winner">  {{ gameLogic.activePlayer }} WON </h1>
+    
+    <button mat-raised-button color="primary" (click)="resetGame()"> 
+        Reset 
+    </button>
+
 </div>

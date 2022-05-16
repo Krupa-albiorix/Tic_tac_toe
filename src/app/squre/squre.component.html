@@ -1,0 +1,7 @@
+<div 
+      class="shadow-md " 
+      (click)="changePlayer()" 
+      [ngClass]="{noClick: gameLogic.winner} "
+    >
+      <p class="text-grey-darker"> {{ square.state}} </p>
+</div>

@@ -1,118 +1,107 @@
-import { Status } from './gamestatus';
+import { Injectable } from '@angular/core';
+
+@Injectable()
 export class Gamelogic {
+  
+  board: any = [];
+  boardSize: number = 9;
+  activePlayer: string = "X";
+  turnCount!: 0;
+  isGameRunning: boolean = false;
+  isGameOver: boolean = false;
+  winner: boolean = false;
 
-    gameField: Array<number> = [];
+  constructor() {
+     this.newGame()
+  }
+   
+  newGame(){
+    this.activePlayer = "X";
+    this.turnCount = 0;
+    this.isGameRunning = false;
+    this.isGameOver =  false;
+    this.winner = false;
+    this.board = this.createBoard();
+  } 
 
-    currentTurn!: number;
+  createBoard(){
+    let board = [];
+    for( let i = 0; i < 9; i ++ ){
+      board.push( { id: i, state: null } )
+    };
+    return board
+  } 
 
-    gameStatus : Status;
+   get getBoard (){
+     return this.board
+   }
 
-    winSituationsOne: Array<Array<number>> = [
-        [1, 1, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 1, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 1, 1, 1],
-        [1, 0, 0, 1, 0, 0, 1, 0, 0],
-        [0, 1, 0, 0, 1, 0, 0, 1, 0],
-        [0, 0, 1, 0, 0, 1, 0, 0, 1],
-        [0, 0, 1, 0, 1, 0, 1, 0, 0],
-        [1, 0, 0, 0, 1, 0, 0, 0, 1]
-    ]
-
-    winSituationsTwo: Array<Array<number>> = [
-        [2, 2, 2, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 2, 2, 2, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 2, 2, 2],
-        [2, 0, 0, 2, 0, 0, 2, 0, 0],
-        [0, 2, 0, 0, 2, 0, 0, 2, 0],
-        [0, 0, 2, 0, 0, 2, 0, 0, 2],
-        [0, 0, 2, 0, 2, 0, 2, 0, 0],
-        [2, 0, 0, 0, 2, 0, 0, 0, 2]
-    ]
-
-    public constructor() {
-        this.gameStatus = Status.STOP;
-        this.gameField = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+   set setBoard( board: any  ){
+     this.board = [...board]
+   }
+   
+  changePlayerTurn( squareClicked: any){ 
+    this.updateBoard( squareClicked )
+    if(!this.isGameOver) this.activePlayer = this.activePlayer === "X" ? "O" : "X"
+    this.turnCount ++;
+    this.isGameOver = this.isGameOver ? true : false;
     }
 
-    gameStart(): void {
-        this.gameField = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-        this.currentTurn = this.playerStart();
-        console.log(this.currentTurn);
-        this.gameStatus = Status.START;
+  updateBoard( squareClicked: any ){
+    this.board[ squareClicked.id ].state = squareClicked.state
+    if (this.isWinner) {
+       this.winner = true;
+       this.isGameRunning = false;
+       this.isGameOver = true;
     }
+  }
 
-    playerStart(): number {
-        const startPlayer = Math.floor(Math.random() * 2) + 1;
-        return startPlayer;
-    }
+  get gameOver(): boolean{
+    return this.turnCount > 8 || this.winner ? true : false
+  }
 
-    setField(position: number, value: number) {
-        this.gameField[position] = value;
-        console.log(this.gameField);
-    }
+  get isWinner(): boolean{
+    return this.checkDiag() || this.checkRows(this.board, "row") || this.checkRows(this.board, "col") ? true : false;
+  }
 
-    getPlayerColorClass() : string {
-        const colorClass = (this.currentTurn === 2) ? 'player-two' : 'player-one';
-        return colorClass;
-    }
+   checkRows( board: { state: any; }[], mode: string ): boolean{
+    
+    const
+      ROW = mode === "row" ? true : false,
+      DIST = ROW ? 1 : 3,
+      INC = ROW ? 3 : 1,
+      NUMTIMES = ROW ? 7 : 3;
 
-    changePlayer() {
-        this.currentTurn = (this.currentTurn === 2) ? 1 : 2;
-    }
+      for ( let i = 0; i < NUMTIMES; i += INC ){
 
-    arrayEquals(a: Array<any>, b: Array<any>): boolean {
-        return Array.isArray(a) && Array.isArray(b) && a.length === b.length && 
-        a.every( (value, index) => value === b[index] );
-    }
+        let 
+          firstSquare = board[i].state,
+          secondSquare =  board[i + DIST].state,
+          thirdSquare = board[ i + ( DIST * 2)].state;
 
-    async checkGameWinner() {
-        let isWinner = false;
-
-        const checkArray = ( this.currentTurn === 1 ) ? this.winSituationsOne : this.winSituationsTwo;
-
-        const currentArray: any[] = [];
-        
-        this.gameField.forEach( (subfield, index) => {
-            if (subfield !== this.currentTurn) {
-                currentArray[index] = 0;
-            }
-            else {
-                currentArray[index] = subfield;
-            }
-        });
-
-        checkArray.forEach( (checkfield, checkindex) => {
-            if (this.arrayEquals(checkfield, currentArray) ) {
-                isWinner = true;
-            }
-        });
-
-        if (isWinner) {
-            this.gameEnd();
-            return true;
+        if ( firstSquare && secondSquare && thirdSquare  ){
+           if ( firstSquare === secondSquare && secondSquare === thirdSquare ) return true    
         }
-        else {
-            return false;
-        }
+      }
+      return false
+   }
+
+   checkDiag (){
+    const timesRun = 2,
+      midSquare = this.board[4].state;
+
+    for( let i = 0; i <= timesRun; i+=2 ){
+
+     let 
+      upperCorner = this.board[i].state,
+      lowerCorner =  this.board[8 - i].state;
+    
+      if ( midSquare && upperCorner && lowerCorner  ){
+          if( midSquare === upperCorner && upperCorner === lowerCorner) return true
+      }
     }
 
-    async checkGameFull(): Promise<boolean> {
-        let isFull = true;
+     return false
+   }
 
-        if (this.gameField.includes(0)) {
-            isFull = false;
-        }
-
-        if (isFull) {
-            this.gameEnd();
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    gameEnd() {
-        this.gameStatus = Status.STOP;
-    }
 }
