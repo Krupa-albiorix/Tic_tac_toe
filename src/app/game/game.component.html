@@ -1,11 +1,8 @@
 <div class="header">
-    <h1 class="text-center text-orange "  
-      *ngIf="gameLogic.isGameRunning"  
-      [ngClass]="{'text-teal': gameLogic.activePlayer == 'O'}"> 
-      {{ gameLogic.activePlayer }}'S TURN  
+    <h1 *ngIf="gameLogic.isGameRunning" [ngClass]="{'text-teal': gameLogic.activePlayer == 'O'}">
+        {{ gameLogic.activePlayer }}'S TURN
     </h1>
-    <h1 *ngIf="!gameLogic.isGameRunning" >  Tic-Tac-Toe </h1> 
-
+    <h1 *ngIf="!gameLogic.isGameRunning"> Tic-Tac-Toe </h1>
 
     <section>
         <div class="square-container" *ngFor="let square of gameLogic.board">
@@ -13,10 +10,12 @@
         </div>
     </section>
 
-    <h1 class="current-status text-center text-grey-darker" *ngIf="gameLogic.winner">  {{ gameLogic.activePlayer }} WON </h1>
-    
-    <button mat-raised-button color="primary" (click)="resetGame()"> 
-        Reset 
+    <h1 *ngIf="gameLogic.winner"> {{ gameLogic.activePlayer }} WON </h1>
+
+    <h1 *ngIf="gameLogic.isGamedone"> No Winner!!! </h1>
+
+    <button mat-raised-button color="primary" (click)="resetGame()">
+        Reset
     </button>
 
 </div>

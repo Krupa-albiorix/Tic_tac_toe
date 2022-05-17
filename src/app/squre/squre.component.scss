@@ -1,17 +1,17 @@
 div {
-    border: 1px solid black;
-    padding: 30px;
-    height: 80px;    
+  border: 1px solid black;
+  padding: 30px;
+  height: 80px;
 }
 
-p { 
-    display: inline;
-    margin: 0px;
-    font-size: 20px;
-    overflow: hidden;
-    color: gray;
+p {
+  display: inline;
+  margin: 0px;
+  font-size: 20px;
+  overflow: hidden;
+  color: black;
 }
 
 .noClick {
-    pointer-events: none;
+  pointer-events: none;
 }

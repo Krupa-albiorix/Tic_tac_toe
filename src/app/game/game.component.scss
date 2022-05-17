@@ -1,42 +1,40 @@
 section {
-    width: 600px;
-    display: flex;
-    justify-content: space-evenly;
-    align-content: space-between;
-    align-items: center;
-    margin: 10% auto 50px auto; 
-    flex-wrap: wrap;
-  }
-  
-.square-container {
-    flex: 10 20 32%;
+  width: 600px;
+  display: flex;
+  justify-content: space-evenly;
+  align-content: space-between;
+  text-align: center;
+  margin: 10% auto 50px auto;
+  flex-wrap: wrap;
 }
-  
+
+.square-container {
+  flex: 10 20 32%;
+}
+
 h1 {
-    text-align: center;
-    transition: color .2s;
-    color: gray;
+  text-align: center;
+  color: black;
 }
 
 h1 :leave {
-    transition: display 4s;
+  transition: display 4s;
 }
 
 .header {
-    margin-top: 100px;
+  margin-top: 100px;
 }
 
 section {
-    margin-top: 40px;
+  border: 1px solid black;
+  margin-top: 40px;
 }
 
 .square-container {
-    background: white;
-    width: 30px;
-    height: 60px;
+  background: white;
 }
 
 button {
-    margin-top: 20px;
-    margin-left: 750px;
+  margin-top: 20px;
+  margin-left: 750px;
 }

@@ -8,21 +8,21 @@ import { Gamelogic } from '../class/gamelogic';
 })
 export class SqureComponent implements OnInit {
 
-  @Input() square: any; 
+  @Input() square: any;
 
-  constructor( public gameLogic: Gamelogic ) { }
+  constructor(public gameLogic: Gamelogic) { }
 
   ngOnInit() {
   }
 
-  changePlayer(){ 
+  changePlayer() {
 
     this.gameLogic.isGameRunning = true;
 
-    if ( this.gameLogic.isGameRunning && this.square.state === null ){
-      this.square.state =  this.gameLogic.activePlayer;
-      this.gameLogic.changePlayerTurn( this.square);
+    if (this.gameLogic.isGameRunning && this.square.state === null) {
+      this.square.state = this.gameLogic.activePlayer;
+      this.gameLogic.changePlayerTurn(this.square);
     }
-    
+
   }
 }

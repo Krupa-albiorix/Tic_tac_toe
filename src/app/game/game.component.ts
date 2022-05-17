@@ -9,14 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameComponent implements OnInit {
 
-  square: any;
-  constructor( public gameLogic: Gamelogic ){}
+  constructor(public gameLogic: Gamelogic) { }
 
-  ngOnInit(): void {
-  
-  }
+  ngOnInit(): void { }
 
-  resetGame(){
+  resetGame() {
     this.gameLogic.newGame()
   }
 
